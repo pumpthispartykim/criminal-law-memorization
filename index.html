@@ -6,74 +6,42 @@
 <title>형사법 암기</title>
 <meta name="theme-color" content="#ffffff">
 <style>
-/* Shell: one thin switcher bar on top; each app runs untouched in its own iframe below,
-   so their CSS, scripts and hash routing never collide. Both iframes stay alive once
-   opened, so switching back keeps your place. */
-:root{
-  --bg:#f6f7f9; --paper:#ffffff; --ink:#1b2230; --muted:#5f6878; --line:#dde1e8;
-  --accent:#23477a; --accent-soft:#e7edf6;
-  --body:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
-  --bar:46px;
-  color-scheme:light;
-}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#12161d; --paper:#1a1f28; --ink:#e4e8ef; --muted:#9aa3b2; --line:#2c3340;
-  --accent:#8fb1e3; --accent-soft:#223149; color-scheme:dark;}}
-:root[data-theme="dark"]{
-  --bg:#12161d; --paper:#1a1f28; --ink:#e4e8ef; --muted:#9aa3b2; --line:#2c3340;
-  --accent:#8fb1e3; --accent-soft:#223149; color-scheme:dark;}
-*{box-sizing:border-box}
-html,body{margin:0;height:100%}
-body{background:var(--bg);color:var(--ink);font-family:var(--body);overflow:hidden}
-.switch{height:var(--bar);display:flex;align-items:center;justify-content:center;
-  padding:0 16px;background:var(--paper);border-bottom:1px solid var(--line)}
-.seg{display:flex;gap:2px;padding:3px;border-radius:10px;background:var(--bg);border:1px solid var(--line);
-  width:100%;max-width:420px}
-.seg button{flex:1 1 0;font:inherit;font-size:14px;font-weight:600;cursor:pointer;border:0;border-radius:7px;
-  padding:6px 10px;background:transparent;color:var(--muted);white-space:nowrap;min-height:32px}
-.seg button:hover{color:var(--ink)}
-.seg button[aria-selected="true"]{background:var(--accent);color:var(--paper)}
-.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.panes{position:relative;height:calc(100vh - var(--bar));height:calc(100dvh - var(--bar))}
-.panes iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:var(--bg)}
-.panes iframe[hidden]{display:none}
+/* Shell: each app runs untouched in its own full-screen iframe, so their CSS, scripts
+   and hash routing never collide. Switching is done from the ▾ dropdown next to each
+   app's title (shared/switcher.js), which posts a message here. Both iframes stay
+   alive once opened, so switching back keeps your place. */
+:root{--bg:#f6f7f9;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--bg:#12161d;color-scheme:dark}}
+html,body{margin:0;height:100%;background:var(--bg);overflow:hidden}
+iframe{position:fixed;inset:0;width:100%;height:100%;border:0;background:var(--bg)}
+iframe[hidden]{display:none}
 </style>
 </head>
 <body>
-<nav class="switch" aria-label="과목 전환">
-  <div class="seg" role="tablist">
-    <button role="tab" id="tab-trial" data-key="trial" aria-controls="pane-trial">형사실무 판례</button>
-    <button role="tab" id="tab-prosecution" data-key="prosecution" aria-controls="pane-prosecution">검찰실무</button>
-  </div>
-</nav>
-<main class="panes">
-  <iframe id="pane-trial" role="tabpanel" aria-labelledby="tab-trial" title="형사실무 판례" data-src="trial/index.html" hidden></iframe>
-  <iframe id="pane-prosecution" role="tabpanel" aria-labelledby="tab-prosecution" title="검찰실무" data-src="prosecution/index.html" hidden></iframe>
-</main>
+<iframe id="pane-trial" title="형사실무 판례" data-src="trial/index.html" hidden></iframe>
+<iframe id="pane-prosecution" title="검찰실무" data-src="prosecution/index.html" hidden></iframe>
 <script>
 (function(){
   var KEY='hub-tab', TITLES={trial:'형사실무 판례',prosecution:'검찰실무'};
-  var tabs=[].slice.call(document.querySelectorAll('.seg button'));
   function store(k){try{localStorage.setItem(KEY,k)}catch(e){}}
   function stored(){try{return localStorage.getItem(KEY)}catch(e){return null}}
-  function show(k,focus){
+  function show(k){
     if(!TITLES[k])k='trial';
-    tabs.forEach(function(b){
-      var on=b.dataset.key===k, f=document.getElementById('pane-'+b.dataset.key);
-      b.setAttribute('aria-selected',on); b.tabIndex=on?0:-1; f.hidden=!on;
+    Object.keys(TITLES).forEach(function(key){
+      var f=document.getElementById('pane-'+key), on=key===k;
+      f.hidden=!on;
       if(on&&!f.getAttribute('src'))f.src=f.dataset.src; // load each app on first open only
-      if(on&&focus)b.focus();
     });
+    var f=document.getElementById('pane-'+k);
+    try{f.contentWindow.focus()}catch(e){}
     document.title=TITLES[k]+' · 형사법 암기';
     store(k);
     if(location.hash!=='#'+k)history.replaceState(null,'','#'+k);
   }
-  tabs.forEach(function(b,i){
-    b.addEventListener('click',function(){show(b.dataset.key)});
-    b.addEventListener('keydown',function(e){
-      var d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0; if(!d)return;
-      e.preventDefault(); show(tabs[(i+d+tabs.length)%tabs.length].dataset.key,true);
-    });
+  window.addEventListener('message',function(e){
+    var src=[].some.call(document.querySelectorAll('iframe'),function(f){return f.contentWindow===e.source});
+    if(!src||!e.data||e.data.type!=='subject-switch')return; // only our own panes may switch
+    show(e.data.to);
   });
   window.addEventListener('hashchange',function(){show(location.hash.slice(1))});
   show(location.hash.slice(1)||stored()||'trial');
