@@ -635,7 +635,6 @@ figure.tbl.wide img{max-width:none;width:min(1400px,240%)}
 .land .stat3 b{color:var(--ink);font-weight:600;margin-left:4px}
 .src{font-size:12px;color:var(--faint);margin:28px 0 0;line-height:1.7}
 .tocbtn{white-space:nowrap;flex:none}
-@media (max-width:420px){.brand{font-size:14px}.topin{gap:10px}}
 .ctext li .n:empty{visibility:hidden}
 
 .nwb{display:inline-block;margin-left:6px;font-size:11px;line-height:1.5;padding:0 6px;border:1px solid var(--line);border-radius:99px;color:var(--faint);vertical-align:1px;font-weight:400}
@@ -659,12 +658,7 @@ section.sec>h3{font-size:calc(17px * var(--rs,1))}
 .rsz span{font-size:12px;color:var(--faint);min-width:3.2em;text-align:center;font-variant-numeric:tabular-nums}
 body.outside .rsz{display:none}
 
-/* 넓은 화면 활용 + PC 목차 접기 */
-html body .wrap{max-width:none;padding:0 clamp(16px,2.5vw,48px)}
-@media (min-width:861px){html body .wrap{grid-template-columns:clamp(260px,18vw,340px) minmax(0,1fr);gap:clamp(24px,2.5vw,56px)}html body.outside .wrap{grid-template-columns:minmax(0,1fr)}}
-html body .topin{max-width:none;padding:12px clamp(16px,2.5vw,48px)}
-html body .ctext,html body .note{max-width:none}
-body.outside .wrap{grid-template-columns:minmax(0,1fr)}
+/* PC 목차 접기 */
 @media (min-width:861px){
   body.tocfold:not(.outside) .wrap{grid-template-columns:0 minmax(0,1fr);gap:0}
   body.tocfold:not(.outside) nav.toc{visibility:hidden;width:0;padding:0;overflow:hidden}
@@ -691,7 +685,6 @@ body.outside .tocfoldbtn{display:none!important}
 </head>
 <body>
 <header class="top"><div class="topin">
-  <button type="button" class="tocfoldbtn" id="tocfold" aria-pressed="false" title="목차 접기/펴기 (\ 키)">☰ 목차 접기</button>
   <h1 class="brand"><a class="brand" href="#home">검찰실무</a></h1>
   <span class="stats" id="stats"></span>
   <div class="search">
@@ -699,6 +692,7 @@ body.outside .tocfoldbtn{display:none!important}
     <input id="q" name="q" type="search" placeholder="죄명이나 키워드…" autocomplete="off" spellcheck="false">
     <span class="hits" id="hits"></span>
   </div>
+  <button type="button" class="tocfoldbtn" id="tocfold" aria-pressed="false" title="목차 접기/펴기 (\ 키)">☰ 목차 접기</button>
   <span class="rsz" role="group" aria-label="글자 크기"><button type="button" id="rs-dn" aria-label="글자 작게">가−</button><span id="rs-lv">100%</span><button type="button" id="rs-up" aria-label="글자 크게">가+</button></span>
   <button class="tocbtn" id="tocbtn" type="button">목차</button>
 </div></header>
@@ -1272,6 +1266,6 @@ route();
 })();
 
 </script>
-<script src="../shared/switcher.js?v=20261125b"></script>
+<script src="../shared/switcher.js?v=20261125d"></script>
 </body>
 </html>

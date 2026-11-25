@@ -1,13 +1,13 @@
 # 형사법 암기
 
-형사실무 판례와 검찰실무 학습 페이지를 한 곳에 모은 저장소입니다. 서버 없이 정적 파일로 동작합니다.
+형사재판실무와 검찰실무 학습 페이지를 한 곳에 모은 저장소입니다. 서버 없이 정적 파일로 동작합니다.
 
 ## 사용법
 루트 `index.html`을 엽니다. 각 과목 제목 옆 **▾** 버튼을 눌러 다른 과목으로 전환합니다.
 
 | 과목 | 내용 | 폴더 | 원본 |
 |---|---|---|---|
-| 형사실무 판례 | 판례집·플래시 카드·OX 퀴즈·Drill | `trial/` | [criminal-trial-cases](https://github.com/pumpthispartykim/criminal-trial-cases) |
+| 형사재판실무 | 판례집·플래시 카드·OX 퀴즈·Drill | `trial/` | [criminal-trial-cases](https://github.com/pumpthispartykim/criminal-trial-cases) |
 | 검찰실무 | 요론집·플래시 카드·OX 퀴즈 | `prosecution/` | [prosecution-practice](https://github.com/pumpthispartykim/prosecution-practice) |
 
 - 주소 끝 `#trial` / `#prosecution`으로 원하는 과목을 바로 열 수 있습니다. 마지막으로 본 과목은 기억됩니다.
