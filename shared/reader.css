@@ -1,0 +1,23 @@
+/* 판례집·요론집 공통: 넓은 화면 활용(좌우 여백 삭제) + PC 목차 접기.
+   검찰실무 원본(아티팩트)의 규칙을 두 앱이 함께 쓰도록 옮긴 것. 각 앱의 <style> 뒤에 불러온다. */
+
+/* 머리글·본문을 화면 끝까지. 여백은 화면 폭의 2.5%(16~48px)만 */
+html body .wrap{max-width:none;padding:0 clamp(16px,2.5vw,48px)}
+@media (min-width:861px){
+  html body .wrap{grid-template-columns:clamp(260px,18vw,340px) minmax(0,1fr);gap:clamp(24px,2.5vw,56px)}
+  html body.outside .wrap{grid-template-columns:minmax(0,1fr)}
+}
+html body .topin{max-width:none;padding:12px clamp(16px,2.5vw,48px)}
+/* 본문 글줄 폭 제한(72ch) 해제 */
+html body .ctext,html body .note,html body .lk,html body .mymemo,html body .medit{max-width:none}
+
+/* PC 목차 접기 (860px 이하는 원래대로 서랍식 목차) */
+@media (min-width:861px){
+  body.tocfold:not(.outside) .wrap{grid-template-columns:0 minmax(0,1fr);gap:0}
+  body.tocfold:not(.outside) nav.toc{visibility:hidden;width:0;padding:0;overflow:hidden}
+}
+.tocfoldbtn{display:none;align-items:center;gap:4px;flex:none;border:0;background:none;color:var(--muted);font:inherit;font-size:13px;padding:6px 2px;cursor:pointer;white-space:nowrap}
+.tocfoldbtn:hover{color:var(--ink)}
+body.outside .tocfoldbtn{display:none!important}
+@media (max-width:860px){.tocfoldbtn{display:none!important}}
+@media (min-width:861px){body:not(.outside) .tocfoldbtn{display:inline-flex}}
