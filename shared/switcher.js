@@ -10,10 +10,10 @@
   var css=document.createElement('style');
   css.textContent=
     '.subj{position:relative;display:inline-flex;align-items:center;flex:none}'+
-    '.subj-btn{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;margin-left:2px;padding:0;'+
-      'border:1px solid transparent;border-radius:7px;background:transparent;color:var(--muted);cursor:pointer}'+
+    '.subj-btn{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;margin-left:4px;padding:0;'+
+      'border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink);cursor:pointer}'+
     '.subj-btn:hover,.subj-btn[aria-expanded="true"]{background:var(--accent-soft);color:var(--ink)}'+
-    '.subj-btn svg{width:14px;height:14px;transition:transform .15s}'+
+    '.subj-btn svg{width:16px;height:16px;transition:transform .15s}'+
     '.subj-btn[aria-expanded="true"] svg{transform:rotate(180deg)}'+
     '.subj-menu{position:absolute;top:calc(100% + 6px);left:0;z-index:60;min-width:180px;margin:0;padding:4px;list-style:none;'+
       'background:var(--paper);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.14)}'+
