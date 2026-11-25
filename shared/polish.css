@@ -1,0 +1,43 @@
+/* 다듬기(unslop 점검 1~7 반영). 두 앱 공통, 각 앱 <style>과 reader.css 뒤에 불러온다.
+   규칙: 강조색은 선택 상태에만, 굵기 최대 600, 작은 글자 자간 0, 버튼 모서리 2px, 간격은 4px 격자.
+   unslop by Damir Sokolovsky (@heydamir), CC BY 4.0 — 점검 기준 출처 */
+
+/* 1. 백업 패널: 상자·강조색 버튼 4개 → 선으로 나누고, 줄마다 잉크색 기본 버튼 1개 + 글자 버튼 */
+html body .bk{margin-top:16px;padding:16px 0 0;border:0;border-top:1px solid var(--line);border-radius:0;background:none}
+html body .bk summary{font-size:15px;font-weight:600;color:var(--ink)}
+html body .bk-steps{margin:12px 0 16px;padding-left:20px;font-size:14px;line-height:1.7;color:var(--muted)}
+html body .bk-steps b{font-weight:600;color:var(--ink)}
+html body .bk-row{gap:16px;margin:12px 0}
+html body .bk button{min-height:36px;padding:8px 0;border:0;border-radius:0;background:none;color:var(--muted);font:inherit;font-size:14px;font-weight:400;cursor:pointer}
+@media (hover:hover){html body .bk button:hover{color:var(--ink)}}
+html body .bk button.bk-primary{padding:8px 20px;border-radius:2px;background:var(--ink);color:var(--bg);font-weight:500}
+html body .bk button:active{opacity:.6}
+html body .bk textarea{padding:8px 12px;border:1px solid var(--line);border-radius:2px;background:transparent;font-size:13px}
+html body .bk textarea:focus-visible{outline:none;border-color:var(--ink)}
+html body .bk-st{font-size:13px;color:var(--muted)}
+html body .bk-note{margin:12px 0 0;font-size:13px;color:var(--faint)}
+
+/* 2. 작은 글자(16px 미만)는 자간 0. 큰 제목의 좁은 자간은 각 제목 규칙에 그대로 남는다 */
+html body{letter-spacing:0}
+html body .brand,html body .cno,html body .pg,html body .ox-eyebrow{letter-spacing:0}
+
+/* 3. 어중간한 글자 크기 정리 (12.8 → 13, 11 → 12, 13.33 → 본문보다 3px 작게) */
+html body .fc-bmtile span{font-size:13px}
+html body .ox-mode small,html body .ox-wrun small{font-size:12px}
+html body .cn{font-size:calc(1em - 3px)}
+
+/* 4. 굵기 최대 600 */
+html body b,html body strong{font-weight:600}
+html body .toc .homelink{font-weight:600}
+html body .ctext li .n,html body li>.n{font-weight:600}
+
+/* 5. 모서리: 버튼·선택 표시 2px, 떠 있는 메뉴 4px */
+html body .subj-btn,html body .toc summary,html body .toc .homelink,html body .mbtn,
+html body .chead .mbtn,html body .pager a,html body .chips button,html body .tocclose,html body .nwb,html body #retbar,
+html body .ox-tab{border-radius:2px}
+html body .subj-menu,html body #hlbar,html body .ox-tabs{border-radius:4px}
+html body .subj-menu a{border-radius:2px}
+
+/* 6. 4px 격자에서 벗어난 간격 (15·18 → 16·20) */
+html body .ox-btn{padding:16px 20px}
+html body .ox-dock .ox-btn{padding:20px}

@@ -645,7 +645,7 @@ figure.tbl.wide img{max-width:none;width:min(1400px,240%)}
 @media (pointer:coarse){.hlhint{display:none}}
 
 /* 법리 사이 간격·글자 크기 */
-.ctext li{margin:0 0 9px!important;line-height:1.75}
+.ctext li{margin:0 0 8px!important;line-height:1.75}
 .ctext li:last-child{margin-bottom:0!important}
 .ctext,.ctext li{font-size:calc(16px * var(--rs,1))}
 section.sec>h3{font-size:calc(17px * var(--rs,1))}
@@ -658,7 +658,7 @@ body.outside .rsz{display:none}
 
 
 /* 메모 */
-.chead .mbtn{margin-left:auto;font-size:12px!important;border:1px solid var(--line)!important;border-radius:6px;padding:1px 9px!important;background:none;color:var(--faint);cursor:pointer;opacity:.75}
+.chead .mbtn{margin-left:auto;font-size:12px!important;border:1px solid var(--line)!important;border-radius:6px;padding:2px 8px!important;background:none;color:var(--faint);cursor:pointer;opacity:.75}
 .chead .mbtn:hover{opacity:1;color:var(--ink)}
 .chead .mbtn.has{opacity:1;color:var(--accent);border-color:var(--accent)!important}
 .mymemo,.medit{max-width:none!important;font-size:calc(14px * var(--rs,1))}
@@ -669,7 +669,8 @@ body.outside .rsz{display:none}
 .syncst{font-size:12px;color:var(--faint);margin:28px 0 0}
 
 </style>
-<link rel="stylesheet" href="../shared/reader.css?v=20261125i">
+<link rel="stylesheet" href="../shared/reader.css?v=20261125j">
+<link rel="stylesheet" href="../shared/polish.css?v=20261125j">
 </head>
 <body>
 <header class="top"><div class="topin">
@@ -848,7 +849,7 @@ D.forEach((ch,ci)=>{secStart[ci]=gsi;gsi+=ch.sections.length;});
 const chCount=ch=>ch.sections.reduce((a,s)=>a+s.entries.reduce((b,e)=>b+e.props.length,0),0);
 const pgRange=ch=>{const p=ch.sections.map(s=>s.pg).filter(x=>x!=null);if(!p.length)return '교재 추가분';return Math.min(...p)===Math.max(...p)?`원문 ${p[0]}쪽`:`원문 ${Math.min(...p)}–${Math.max(...p)}쪽`;};
 let html='';
-html+=`<div id="wiki" class="off"><p class="crumb"><a href="#home">처음</a> › 요론집</p><div class="hero"><h2>형법 요론집</h2><p>법리 ${ITEMS.length}개 · ${D.length}개 장 · ${SECS.length}개 항목. 원문의 굵은 글씨는 굵게 살렸습니다.</p></div><div class="grid">`+
+html+=`<div id="wiki" class="off"><p class="crumb"><a href="#home">처음</a> › 요론집</p><div class="hero"><h2>형법 요론집</h2><p>법리 ${ITEMS.length.toLocaleString('ko-KR')}개 · ${D.length}개 장 · ${SECS.length}개 항목. 원문의 굵은 글씨는 굵게 살렸습니다.</p></div><div class="grid">`+
  D.map((ch,ci)=>{const sub=ch.sections.slice(0,4).map(s=>esc(s.title.replace(/\s*\(.*$/,''))).join(' · ')+(ch.sections.length>4?' …':'');
   return `<a class="card" href="#c${ci}"><span class="t">${esc(ch.title)}</span><span class="m">법리 ${chCount(ch)}개 · ${pgRange(ch)}</span><span class="s">${sub}</span></a>`;}).join('')+`</div><h3 class="hh">내 메모</h3><div class="mylist" id="mylist"></div></div>`;
 D.forEach((ch,ci)=>{
@@ -866,7 +867,7 @@ D.forEach((ch,ci)=>{
   html+=`<div class="pager">${p?`<a href="#c${ci-1}"><small>이전 장</small>${esc(p.title)}</a>`:'<span></span>'}${x?`<a class="next" href="#c${ci+1}"><small>다음 장</small>${esc(x.title)}</a>`:''}</div></div>`;
 });
 main.insertAdjacentHTML('beforeend',html);
-$('stats').textContent=`법리 ${ITEMS.length} · OX ${OXP.length}`;
+$('stats').textContent=`법리 ${ITEMS.length.toLocaleString('ko-KR')} · OX ${OXP.length.toLocaleString('ko-KR')}`;
 
 // TOC
 const toc=$('toc');
@@ -1053,12 +1054,12 @@ window.addEventListener('hashchange',route);
 
 /* ---------- 처음 화면 ---------- */
 function homeRefresh(){
-  $('m-wiki').textContent=`${D.length}개 장 · 법리 ${ITEMS.length}개 · 표 4개`+(()=>{const n=Object.values(LS.get('gs-memo',{})).filter(m=>m&&m.text).length;return n?` · 내 메모 ${n}건`:'';})();
+  $('m-wiki').textContent=`${D.length}개 장 · 법리 ${ITEMS.length.toLocaleString('ko-KR')}개 · 표 4개`+(()=>{const n=Object.values(LS.get('gs-memo',{})).filter(m=>m&&m.text).length;return n?` · 내 메모 ${n}건`:'';})();
   const kn=LS.get('gs-fc-known',{});const nk=Object.values(kn).filter(v=>v==='k').length;
   const os=LS.get('gs-ox-stats',{});let solved=0,wrong=0;Object.values(os).forEach(s=>{if(s[0]+s[1])solved++;if(s[1]>0)wrong++;});
-  const pct=(a,b)=>b?Math.round(a*100/b):0;
-  $('m-fc').textContent=`카드 ${ITEMS.length}장 · 알아요 ${nk}장 (${pct(nk,ITEMS.length)}%)`;
-  $('m-ox').textContent=`선지 ${OXP.length}개 · 푼 선지 ${solved}개 · 틀린 적 있는 선지 ${wrong}개`;
+  const pct=(a,b)=>b?Math.round(a*100/b):0;const nf=n=>n.toLocaleString('ko-KR');
+  $('m-fc').textContent=`카드 ${nf(ITEMS.length)}장 · 알아요 ${nf(nk)}장 (${pct(nk,ITEMS.length)}%)`;
+  $('m-ox').textContent=`선지 ${nf(OXP.length)}개 · 푼 선지 ${nf(solved)}개 · 틀린 적 있는 선지 ${nf(wrong)}개`;
   $('b-fc').style.width=pct(nk,ITEMS.length)+'%';$('b-ox').style.width=pct(solved,OXP.length)+'%';
   const last=LS.get('gs-last',null);const rows=[];
   if(last&&last.h){const el=document.getElementById(last.h);const c=el&&el.closest('.chapter');if(c){const sec=el.closest('section.sec');rows.push(`<button type="button" class="go main" data-h="${esc(last.h)}"><span>읽던 곳</span><b>${esc(sec?sec.querySelector('h3').firstChild.textContent:c.querySelector('h2').textContent)}</b><i>›</i></button>`);}}
@@ -1084,7 +1085,7 @@ const FC=(()=>{
   function home(){
     if(FC.preset){Object.assign(opt,{unk:false,bm:false},FC.preset);if(FC.preset.unk&&!sel.size)D.forEach((c,ci)=>sel.add(ci));FC.preset=null;}
     $('fc-home').hidden=false;$('fc-deck').hidden=true;
-    $('fc-total').textContent=`카드 ${ITEMS.length}장`;
+    $('fc-total').textContent=`카드 ${ITEMS.length.toLocaleString('ko-KR')}장`;
     tiles.innerHTML=D.map((ch,ci)=>{const it=chItems(ci);const k=it.filter(x=>known[x.id]==='k').length;
       return `<button type="button" class="fc-tile" data-ci="${ci}" aria-pressed="${sel.has(ci)}"><span class="num">${ch.title.split('.')[0]}</span><span class="nm">${esc(ch.short)}</span><span class="ct">${it.length}장 · 알아요 ${k}</span><span class="mini"><i style="width:${it.length?k*100/it.length:0}%"></i></span></button>`;}).join('');
     const nb=Object.keys(bm).length;const b=$('fc-bmgo');b.innerHTML=`<b>☆ 북마크한 카드</b><span>${nb}장</span>`;b.disabled=!nb;
@@ -1147,7 +1148,7 @@ const OX=(()=>{
   const rate=x=>{const s=stats[x.id];if(!s||!(s[0]+s[1]))return null;return s[0]/(s[0]+s[1]);};
   function setup(){
     stats=LS.get('gs-ox-stats',{});
-    $('ox-total').textContent=OXP.length;
+    $('ox-total').textContent=OXP.length.toLocaleString('ko-KR');
     document.querySelectorAll('#ox .ox-mode').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.n===cfg.n)));
     $('ox-topics').innerHTML=D.map((ch,ci)=>{const ss=ch.sections.map((s,k)=>secStart[ci]+k).filter(gi=>secHas[gi]);if(!ss.length)return '';
       const all=ss.every(g=>selS.has(g));
@@ -1232,8 +1233,8 @@ route();
 })();
 
 </script>
-<script src="../shared/tocfold.js?v=20261125i"></script>
-<script src="../shared/backup.js?v=20261125i"></script>
-<script src="../shared/switcher.js?v=20261125i"></script>
+<script src="../shared/tocfold.js?v=20261125j"></script>
+<script src="../shared/backup.js?v=20261125j"></script>
+<script src="../shared/switcher.js?v=20261125j"></script>
 </body>
 </html>

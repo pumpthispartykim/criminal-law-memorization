@@ -103,11 +103,11 @@
         '<li>다른 기기에서 이 페이지를 열고, 아래 칸에 붙여 넣은 뒤 <b>불러오기</b>를 누릅니다.</li>'+
         '<li>기록이 많으면 <b>파일로 저장</b> → <b>파일 불러오기</b>가 편합니다.</li>'+
       '</ol>'+
-      '<div class="bk-row"><button type="button" data-bk="copy">기록 복사</button><button type="button" data-bk="save">파일로 저장</button>'+
+      '<div class="bk-row"><button type="button" class="bk-primary" data-bk="copy">기록 복사</button><button type="button" data-bk="save">파일로 저장</button>'+
         '<span class="bk-st" data-bk="st" aria-live="polite"></span></div>'+
       '<label class="hide" for="bk-in">백업한 기록 붙여넣기</label>'+
       '<textarea id="bk-in" rows="3" placeholder="여기에 복사한 기록을 붙여 넣으세요" spellcheck="false" autocomplete="off"></textarea>'+
-      '<div class="bk-row"><button type="button" data-bk="load">불러오기</button><button type="button" data-bk="open">파일 불러오기</button>'+
+      '<div class="bk-row"><button type="button" class="bk-primary" data-bk="load">불러오기</button><button type="button" data-bk="open">파일 불러오기</button>'+
         '<input type="file" data-bk="file" accept=".txt,.json,text/plain,application/json" hidden></div>'+
       '<p class="bk-note">메모는 판례·법리마다 더 최근 것이 남고, 나머지 기록은 불러온 것으로 바뀝니다. 예전 방식으로 만든 백업(두 과목 각각)도 불러올 수 있습니다.</p>';
 

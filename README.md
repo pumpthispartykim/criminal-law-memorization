@@ -18,6 +18,8 @@
   - `switcher.js`: 제목 옆 ▾ 과목 전환
   - `reader.css`: 판례집·요론집 넓은 화면(좌우 여백 최소화)
   - `tocfold.js`: PC 목차 접기 버튼과 `\` 단축키
+  - `backup.js`: 두 과목 통합 백업·복원
+  - `polish.css`: 디자인 다듬기 (글자 굵기·자간·크기, 모서리, 간격, 백업 패널). 점검 기준은 [unslop](https://github.com/heydamir/unslop) (Damir Sokolovsky, CC BY 4.0)
 
 ## 학습 기록
 - 기록은 브라우저 `localStorage`에 저장됩니다. 형사재판실무는 `wk-*`, 검찰실무는 `gs-*` 키를 씁니다.
