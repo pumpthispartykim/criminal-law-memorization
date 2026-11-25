@@ -631,8 +631,6 @@ figure.tbl.wide img{max-width:none;width:min(1400px,240%)}
 .fc-q .ent{font-size:13px;color:var(--muted)}
 .fc-a b{background:none;color:var(--accent);font-weight:700;padding:0}
 .ox-exp .ent{display:block;font-size:12px;color:var(--faint);margin-bottom:4px}
-.land .stat3{display:flex;gap:22px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin:-28px 0 30px;font-variant-numeric:tabular-nums}
-.land .stat3 b{color:var(--ink);font-weight:600;margin-left:4px}
 .src{font-size:12px;color:var(--faint);margin:28px 0 0;line-height:1.7}
 .tocbtn{white-space:nowrap;flex:none}
 .ctext li .n:empty{visibility:hidden}
@@ -702,8 +700,6 @@ body.outside .tocfoldbtn{display:none!important}
 <div class="page" id="home"><div class="land">
  <p class="kicker">검찰실무 · 형법 요론</p>
  <h2>검찰실무</h2>
- <p class="lead">요론 32쪽과 교재 각론 보충 법리를 <b>요론집</b>으로 읽고, <b>플래시 카드</b>로 떠올리고, <b>OX 퀴즈</b>로 확인합니다.</p>
- <div class="stat3"><span>법리<b id="n-p"></b></span><span>항목<b id="n-s"></b></span><span>OX 선지<b id="n-o"></b></span></div>
  <div class="today" id="home-today"></div>
  <div class="menu">
   <a class="mcard" href="#wiki"><span class="num">1</span><span class="t">요론집</span><span class="d">죄명별 법리를 장·항목 순서대로 정리했습니다. 검색, 목차, 표 확대, 핵심어 표시를 쓸 수 있어요.</span><span class="meta" id="m-wiki"></span></a>
@@ -1073,7 +1069,7 @@ window.addEventListener('hashchange',route);
 
 /* ---------- 처음 화면 ---------- */
 function homeRefresh(){
-  $('n-p').textContent=ITEMS.length;$('n-s').textContent=SECS.length;$('n-o').textContent=OXP.length;$('m-wiki').textContent=`${D.length}개 장 · 법리 ${ITEMS.length}개 · 표 4개`+(()=>{const n=Object.values(LS.get('gs-memo',{})).filter(m=>m&&m.text).length;return n?` · 내 메모 ${n}건`:'';})();
+  $('m-wiki').textContent=`${D.length}개 장 · 법리 ${ITEMS.length}개 · 표 4개`+(()=>{const n=Object.values(LS.get('gs-memo',{})).filter(m=>m&&m.text).length;return n?` · 내 메모 ${n}건`:'';})();
   const kn=LS.get('gs-fc-known',{});const nk=Object.values(kn).filter(v=>v==='k').length;
   const os=LS.get('gs-ox-stats',{});let solved=0,wrong=0;Object.values(os).forEach(s=>{if(s[0]+s[1])solved++;if(s[1]>0)wrong++;});
   const pct=(a,b)=>b?Math.round(a*100/b):0;
