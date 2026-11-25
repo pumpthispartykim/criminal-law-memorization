@@ -610,7 +610,7 @@ li>.n,.case .n{color:var(--faint)!important;font-weight:400}
 </head>
 <body>
 <header class="top"><div class="topin">
-  <h1 class="brand"><a class="brand" href="#home">형사실무 판례</a></h1>
+  <h1 class="brand"><a class="brand" href="#home">형사재판실무</a></h1>
   <span class="stats" id="stats"></span>
   <div class="search">
     <label for="q" class="hide">판례 검색</label>
@@ -804,7 +804,7 @@ li>.n,.case .n{color:var(--faint)!important;font-weight:400}
  <p class="crumb"><a href="#home">처음</a> › OX 퀴즈</p>
  <section class="ox-view" id="ox-setup">
   <header style="display:flex;flex-direction:column;gap:6px">
-   <span class="ox-eyebrow">형사실무 판례 · 선지 OX</span>
+   <span class="ox-eyebrow">형사재판실무 · 선지 OX</span>
    <h2 class="ttl">판례 OX</h2>
    <p class="ox-sub">선지 <span id="ox-total"></span>개를 출제합니다. 판례마다 핵심 법리와 결론을 한두 문장(150자 이내)으로 줄여 옳은 지문·틀린 지문으로 냅니다. 선택한 주제에서 고르게 뽑고, 풀수록 약한 선지가 더 자주 나옵니다.</p>
    <p class="ox-sub small">출제 비율 · O와 X는 35~65% 범위에서 섞습니다. 안 푼 선지 → 많이 틀린 선지 → 가끔 틀리는 선지 → 정답률 높은 선지 순으로 비중을 둡니다. 지문과 틀린 지문은 원문을 요약해 Claude가 만들었습니다. 판결 원문은 해설의 '판례집에서 보기'로 확인하세요.</p>
@@ -932,7 +932,7 @@ D.forEach(ch=>{
 const main=document.getElementById('main');let html='';
 const STUDY_N=(()=>{try{const x=JSON.parse(document.getElementById('study-data').textContent).items;const fc=JSON.parse(document.getElementById('study-data').textContent).fc||{};return {cards:Object.keys(fc).length,ox:x.filter(i=>i.f).length};}catch(e){return {cards:0,ox:0};}})();
 const key=no=>no.replace('도','do').replace('다','da').replace('모','mo');
-html+=`<div class="page" id="home"><div class="land"><p class="kicker">형사재판실무 수강생용</p><h2>판례 암기장</h2>
+html+=`<div class="page" id="home"><div class="land"><p class="kicker">형사재판실무 수강생용</p><h2>형사재판실무</h2>
 <div class="today" id="home-today" aria-live="polite"></div>
 <div class="menu">
 <a class="mcard" href="#wiki"><span class="num">1</span><span class="t"><span class="step">읽기</span>판례집</span><span class="meta" id="hm-wiki">${D.length}개 장 · 판례 ${total}건</span><span class="bar"><i id="hb-wiki"></i></span></a>
@@ -1809,6 +1809,6 @@ document.addEventListener('click',async e=>{
 });
 })();
 </script>
-<script src="../shared/switcher.js?v=20261125b"></script>
+<script src="../shared/switcher.js?v=20261125d"></script>
 </body>
 </html>

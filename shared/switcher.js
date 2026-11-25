@@ -2,7 +2,7 @@
    Inside the root shell (iframe) it asks the shell to swap panes, which keeps each
    app's place; opened on its own, it navigates to the shell at the chosen subject. */
 (function(){
-  var SUBJECTS=[{key:'trial',label:'형사실무 판례'},{key:'prosecution',label:'검찰실무'}];
+  var SUBJECTS=[{key:'trial',label:'형사재판실무'},{key:'prosecution',label:'검찰실무'}];
   var here=/\/prosecution\//.test(location.pathname)?'prosecution':'trial';
   var h1=document.querySelector('h1.brand');
   if(!h1||document.getElementById('subj-btn'))return;
