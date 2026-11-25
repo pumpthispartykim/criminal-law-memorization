@@ -605,7 +605,7 @@ li>.n,.case .n{color:var(--faint)!important;font-weight:400}
 .bk-st{font-size:.9em;color:var(--accent)}
 .bk-note{font-size:.85em;color:var(--muted)}
 </style>
-<link rel="stylesheet" href="../shared/reader.css?v=20261125f">
+<link rel="stylesheet" href="../shared/reader.css?v=20261125g">
 <link rel="stylesheet" href="drill/drill.css">
 <link rel="stylesheet" href="hearsay/hearsay.css">
 </head>
@@ -940,7 +940,7 @@ html+=`<div class="page" id="home"><div class="land"><p class="kicker">형사재
 <a class="mcard" href="#cards"><span class="num">2</span><span class="t"><span class="step">떠올리기</span>플래시 카드</span><span class="meta" id="hm-cards">카드 ${STUDY_N.cards}장</span><span class="bar"><i id="hb-cards"></i></span></a>
 <a class="mcard" href="#ox"><span class="num">3</span><span class="t"><span class="step">맞히기</span>OX 퀴즈</span><span class="meta" id="hm-ox">선지 ${STUDY_N.ox}개</span><span class="bar"><i id="hb-ox"></i></span></a>
 <a class="mcard" href="#drills"><span class="num">4</span><span class="t"><span class="step">적용하기</span>Drill</span><span class="meta" id="hm-drill">처단형 30문제 · 전문증거 59문제</span><span class="bar"><i id="hb-drill"></i></span></a>
-</div><p class="tip">기록(진도·별점·메모·형광펜)은 이 브라우저에만 저장됩니다. 다른 기기로 옮기거나 백업하려면 아래를 쓰세요.</p><details class="bk" id="bk"><summary>기록 백업 · 다른 기기로 옮기기</summary><ol class="bk-steps"><li>지금 기기에서 <b>기록 복사</b>를 누릅니다.</li><li>복사된 글을 카카오톡 나와의 채팅 등으로 다른 기기에 보냅니다.</li><li>다른 기기에서 이 페이지를 열고, 아래 칸에 붙여 넣은 뒤 <b>불러오기</b>를 누릅니다.</li></ol><div class="bk-row"><button type="button" id="bk-copy">기록 복사</button><span id="bk-st" class="bk-st" aria-live="polite"></span></div><label class="hide" for="bk-in">백업한 기록 붙여넣기</label><textarea id="bk-in" rows="3" placeholder="여기에 복사한 기록을 붙여 넣으세요" spellcheck="false"></textarea><div class="bk-row"><button type="button" id="bk-load">불러오기</button><span class="bk-note">같은 판례의 메모는 더 최근 것이 남고, 나머지 진도는 붙여 넣은 기록으로 바뀝니다.</span></div></details></div></div>`;
+</div><p class="tip">기록(진도·별점·메모·형광펜)은 이 브라우저에만 저장됩니다. 다른 기기로 옮기거나 백업하려면 아래를 쓰세요.</p><details class="bk" id="bk"></details></div></div>`;
 html+=`<div id="wiki" class="off"><p class="crumb"><a href="#home">처음</a> › 판례집</p><div class="hero"><h2>형사실무 판례집</h2><p>판례 ${total}건 · 서로 다른 판례 ${uniq}건 · ${D.length}개 장. 장을 골라 들어가거나 위 검색창에서 사건번호·키워드로 찾으세요.</p><p class="hltip">판시 문장을 드래그하면 형광펜을 칠할 수 있고, 칠한 부분을 누르면 색을 바꾸거나 지울 수 있습니다. 드래그한 상태에서 숫자 1~6을 누르면 바로 그 색으로 칠해집니다. <span id="homehlcount"></span></p></div><div class="grid">`+
   D.map((ch,ci)=>{const n=ch.sections.reduce((a,s)=>a+s.cases.length,0);const sub=ch.sections.slice(0,4).map(s=>esc(s.title)).join(' · ')+(ch.sections.length>4?` 외 ${ch.sections.length-4}개`:'');
   return `<a class="card" href="#${ch.id}"><span class="t">${esc(ch.title)}</span><span class="m">소제목 ${ch.sections.length}개 · 판례 ${n}건</span><span class="s">${sub}</span></a>`;}).join('')+
@@ -1777,40 +1777,8 @@ renderModes();renderTopics();renderWeak();
 </script>
 <script src="drill/drill.js"></script>
 <script src="hearsay/hearsay.js"></script>
-<script>
-// GitHub 버전: 기록 백업·옮기기, 저장소 보존 요청
-(function(){
-try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist();}catch(e){}
-const $=id=>document.getElementById(id);
-const st=t=>{const e=$('bk-st');if(e)e.textContent=t;};
-const dump=()=>{const o={};for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('wk-')&&k!=='wk-last')o[k]=localStorage.getItem(k);}return o;};
-document.addEventListener('click',async e=>{
-  if(e.target.id==='bk-copy'){
-    let txt;try{txt='WKBK1:'+btoa(unescape(encodeURIComponent(JSON.stringify(dump()))));}catch(err){st('이 브라우저에서는 기록을 읽을 수 없습니다.');return;}
-    $('bk-in').value=txt;
-    try{await navigator.clipboard.writeText(txt);st('복사했습니다. 다른 기기에 붙여 넣으세요.');}
-    catch(err){$('bk-in').select();st('아래 칸의 글을 직접 복사해 주세요.');}
-  }
-  if(e.target.id==='bk-load'){
-    const raw=($('bk-in').value||'').trim();
-    if(!raw.startsWith('WKBK1:')){st('형식이 맞지 않습니다. "기록 복사"로 만든 글 전체를 붙여 넣어 주세요.');return;}
-    let data;try{data=JSON.parse(decodeURIComponent(escape(atob(raw.slice(6)))));}catch(err){st('글이 잘렸거나 손상되었습니다. 다시 복사해 주세요.');return;}
-    try{
-      for(const k in data){
-        if(!k.startsWith('wk-')||typeof data[k]!=='string')continue;
-        if(k==='wk-memos'){
-          let cur={},inc={};try{cur=JSON.parse(localStorage.getItem(k))||{}}catch(_){}try{inc=JSON.parse(data[k])||{}}catch(_){}
-          for(const m in inc){if(!cur[m]||(+inc[m].updated||0)>=(+cur[m].updated||0))cur[m]=inc[m];}
-          localStorage.setItem(k,JSON.stringify(cur));
-        }else localStorage.setItem(k,data[k]);
-      }
-    }catch(err){st('저장하지 못했습니다. 저장 공간이나 시크릿 모드 여부를 확인해 주세요.');return;}
-    st('불러왔습니다. 화면을 새로 고칩니다…');setTimeout(()=>location.reload(),600);
-  }
-});
-})();
-</script>
-<script src="../shared/tocfold.js?v=20261125f"></script>
-<script src="../shared/switcher.js?v=20261125f"></script>
+<script src="../shared/tocfold.js?v=20261125g"></script>
+<script src="../shared/backup.js?v=20261125g"></script>
+<script src="../shared/switcher.js?v=20261125g"></script>
 </body>
 </html>

@@ -669,7 +669,7 @@ body.outside .rsz{display:none}
 .syncst{font-size:12px;color:var(--faint);margin:28px 0 0}
 
 </style>
-<link rel="stylesheet" href="../shared/reader.css?v=20261125f">
+<link rel="stylesheet" href="../shared/reader.css?v=20261125g">
 </head>
 <body>
 <header class="top"><div class="topin">
@@ -696,12 +696,7 @@ body.outside .rsz{display:none}
   <a class="mcard" href="#ox"><span class="num">3</span><span class="t">OX 퀴즈</span><span class="d">원문 그대로의 옳은 지문과 결론을 뒤집은 틀린 지문을 섞어 냅니다. 많이 틀린 선지가 더 자주 나옵니다.</span><span class="meta" id="m-ox"></span><span class="bar"><i id="b-ox"></i></span></a>
  </div>
 
- <details class="bk"><summary>학습 기록 백업·복원</summary>
-  <ol class="bk-steps"><li>기록(플래시카드 알아요·몰라요·북마크, OX 정답률, 형광펜, 읽던 곳)은 이 브라우저에만 저장됩니다.</li><li>다른 기기로 옮기려면 '내보내기'로 받은 내용을 그 기기의 이 칸에 붙여넣고 '가져오기'를 누르세요.</li></ol>
-  <div class="bk-row"><button type="button" id="bk-out">내보내기</button><button type="button" id="bk-dl">파일로 저장</button><button type="button" id="bk-in">가져오기</button><span class="bk-st" id="bk-st"></span></div>
-  <textarea id="bk-txt" rows="4" placeholder="여기에 백업 내용을 붙여넣으세요"></textarea>
-  <p class="bk-note">가져오면 이 기기의 같은 항목 기록을 덮어씁니다.</p>
- </details>
+ <details class="bk" id="bk"></details>
 </div></div>
 
 <div class="page off" id="cards"><div class="fc-wrap">
@@ -1227,14 +1222,6 @@ const OX=(()=>{
   return {setup,runWrong};
 })();
 
-/* ---------- 백업·복원 ---------- */
-(()=>{const st=$('bk-st'),ta=$('bk-txt');if(!ta)return;try{if(window.self!==window.top)$('bk-dl').hidden=true;}catch(e){$('bk-dl').hidden=true;}
-  const keys=()=>{const o={};try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(/^gs-/.test(k))o[k]=localStorage.getItem(k);}}catch(e){}return o;};
-  $('bk-out').onclick=()=>{ta.value=JSON.stringify({v:1,at:new Date().toISOString(),data:keys()});ta.select();
-    try{navigator.clipboard.writeText(ta.value).then(()=>st.textContent='복사했습니다',()=>st.textContent='아래 내용을 복사하세요');}catch(e){st.textContent='아래 내용을 복사하세요';}};
-  $('bk-dl').onclick=()=>{const blob=new Blob([JSON.stringify({v:1,at:new Date().toISOString(),data:keys()})],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='검찰실무-기록-'+new Date().toISOString().slice(0,10)+'.json';document.body.append(a);a.click();a.remove();st.textContent='파일을 저장했습니다';};
-  $('bk-in').onclick=()=>{try{const o=JSON.parse(ta.value);const d=o.data||o;let n=0;for(const k in d){if(/^gs-/.test(k)){localStorage.setItem(k,typeof d[k]==='string'?d[k]:JSON.stringify(d[k]));n++;}}st.textContent=n?`${n}개 항목을 가져왔습니다. 새로고침합니다`:'가져올 항목이 없습니다';if(n)setTimeout(()=>location.reload(),700);}catch(e){st.textContent='백업 내용이 올바르지 않습니다';}};
-})();
 
 /* ---------- 요론집 글자 크기 ---------- */
 (()=>{const L=[85,92,100,108,116,126,138];let i=LS.get('gs-rs',2);if(!(i>=0&&i<L.length))i=2;
@@ -1245,7 +1232,8 @@ route();
 })();
 
 </script>
-<script src="../shared/tocfold.js?v=20261125f"></script>
-<script src="../shared/switcher.js?v=20261125f"></script>
+<script src="../shared/tocfold.js?v=20261125g"></script>
+<script src="../shared/backup.js?v=20261125g"></script>
+<script src="../shared/switcher.js?v=20261125g"></script>
 </body>
 </html>
