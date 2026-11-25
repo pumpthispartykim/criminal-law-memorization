@@ -38,6 +38,9 @@ html body .ox-tab{border-radius:2px}
 html body .subj-menu,html body #hlbar,html body .ox-tabs{border-radius:4px}
 html body .subj-menu a{border-radius:2px}
 
-/* 6. 4px 격자에서 벗어난 간격 (15·18 → 16·20) */
+/* 6. 4px 격자에서 벗어난 간격 (15·18 → 16·20). 짝수 간격(6·10·14·18·22)은 각 CSS 원본에서 정리:
+   버튼·칩 안쪽 여백은 아래로(6→4, 10→8, 14→12, 22→20), 블록 사이·바깥 여백은 위로(6→8, 10→12, 14→16, 18→20) */
 html body .ox-btn{padding:16px 20px}
 html body .ox-dock .ox-btn{padding:20px}
+/* 문단 기본 여백(1em=14px) → 16px, 그 밖의 짝수 간격은 각 CSS 원본에서 4px 격자로 정리 */
+html body p.ox-summary,html body p.muted{margin-top:16px;margin-bottom:16px}

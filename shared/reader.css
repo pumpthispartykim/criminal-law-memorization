@@ -16,7 +16,7 @@ html body .ctext,html body .note,html body .lk,html body .mymemo,html body .medi
   body.tocfold:not(.outside) .wrap{grid-template-columns:0 minmax(0,1fr);gap:0}
   body.tocfold:not(.outside) nav.toc{visibility:hidden;width:0;padding:0;overflow:hidden}
 }
-.tocfoldbtn{display:none;align-items:center;gap:4px;flex:none;border:0;background:none;color:var(--muted);font:inherit;font-size:13px;padding:6px 2px;cursor:pointer;white-space:nowrap}
+.tocfoldbtn{display:none;align-items:center;gap:4px;flex:none;border:0;background:none;color:var(--muted);font:inherit;font-size:13px;padding:4px 2px;cursor:pointer;white-space:nowrap}
 .tocfoldbtn:hover{color:var(--ink)}
 body.outside .tocfoldbtn{display:none!important}
 @media (max-width:860px){.tocfoldbtn{display:none!important}}

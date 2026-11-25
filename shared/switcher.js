@@ -18,7 +18,7 @@
     '.subj-menu{position:absolute;top:calc(100% + 6px);left:0;z-index:60;min-width:180px;margin:0;padding:4px;list-style:none;'+
       'background:var(--paper);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.14)}'+
     '.subj-menu[hidden]{display:none}'+
-    '.subj-menu a{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:7px;color:var(--ink);'+
+    '.subj-menu a{display:flex;align-items:center;gap:8px;padding:8px 8px;border-radius:7px;color:var(--ink);'+
       'text-decoration:none;font-family:var(--body);font-size:14px;font-weight:500;white-space:nowrap}'+
     '.subj-menu a:hover,.subj-menu a:focus-visible{background:var(--accent-soft);outline:none}'+
     '.subj-menu a .ck{width:14px;color:var(--accent);font-weight:700}'+
